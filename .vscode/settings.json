@@ -3,7 +3,25 @@
         "src/main/java"
     ],
     "java.project.referencedLibraries": [
-        "C:/apache-tomcat-10.1.60/lib/servlet-api.jar",
-        "webapp/lib/*/.jar"
+        "lib/*.jar",
+        "C:/apache-tomcat-10.1.60/lib/servlet-api.jar"
+        
+    ],
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "MySql",
+            "database": "clinique",
+            "username": "root",
+            "password": "20032014"
+        }
     ]
 }
