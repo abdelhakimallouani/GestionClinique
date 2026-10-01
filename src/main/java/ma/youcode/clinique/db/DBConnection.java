@@ -10,10 +10,12 @@ import com.zaxxer.hikari.HikariDataSource;
 
 public class DBConnection {
 
-    private static final DataSource dataSource ;
+    private static final DataSource dataSource;
 
     static {
         HikariConfig config = new HikariConfig();
+        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
+
         config.setJdbcUrl(ModelDB.URL);
         config.setUsername(ModelDB.USER);
         config.setPassword(ModelDB.PASSWORD);

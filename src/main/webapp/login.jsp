@@ -79,11 +79,11 @@
     <% } %>
 
     <form method="post" action="${pageContext.request.contextPath}/login">
-        <label for="email">Adresse e-mail</label>
+        <label for="login">Adresse e-mail</label>
         <input
-            id="email"
-            name="email"
-            type="email"
+            id="login"
+            name="login"
+            type="text"
             placeholder="nom@exemple.com"
             required
         >
