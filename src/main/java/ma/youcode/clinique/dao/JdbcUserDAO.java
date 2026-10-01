@@ -14,6 +14,27 @@ import ma.youcode.clinique.entity.Utilisateur;
 public class JdbcUserDAO implements UserDAO {
 
     @Override
+    public void save(Utilisateur user) {
+
+        String sql = "INSERT INTO utilisateur (login, password, role)VALUES (?, ?, ?)";
+
+        try (
+                Connection connection = DBConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)
+            ) {
+
+            statement.setString(1, user.getLogin());
+            statement.setString(2, user.getPassword());
+            statement.setString(3, user.getRole());
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Erreur of save",e);
+        }
+    }
+
+    @Override
     public Optional<Utilisateur> findByLogin(String login) {
         String sql = " SELECT id, login, password, role FROM utilisateur WHERE login = ?";
         try (
@@ -44,11 +65,6 @@ public class JdbcUserDAO implements UserDAO {
     @Override
     public List<Utilisateur> findAll() {
         return new ArrayList<>();
-    }
-
-    @Override
-    public void save(Utilisateur user) {
-
     }
 
     @Override
