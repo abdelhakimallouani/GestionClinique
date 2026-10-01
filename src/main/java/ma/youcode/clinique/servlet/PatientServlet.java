@@ -40,11 +40,11 @@ public class PatientServlet extends HttpServlet {
         String numeroSocial = valeur(request, "numero_securite_sociale");
         String tension = valeur(request, "tension_arterielle");
 
-        if (nom.isEmpty() || nom.length() > 100) {
-            erreurs.add("Le nom est obligatoire (100 caractères maximum).");
+        if (!nom.matches("[\\p{L}\\p{M}][\\p{L}\\p{M} '-]{0,99}")) {
+            erreurs.add("Le nom est obligatoire, doit contenir des lettres et faire 100 caractères maximum.");
         }
-        if (prenom.isEmpty() || prenom.length() > 100) {
-            erreurs.add("Le prénom est obligatoire (100 caractères maximum).");
+        if (!prenom.matches("[\\p{L}\\p{M}][\\p{L}\\p{M} '-]{0,99}")) {
+            erreurs.add("Le prénom est obligatoire, doit contenir des lettres et faire 100 caractères maximum.");
         }
         try {
             LocalDate dateNaissance = LocalDate.parse(dateSaisie);

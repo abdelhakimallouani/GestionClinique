@@ -23,8 +23,15 @@
 <main>
     <h1>Enregistrer un patient</h1>
 
-    <% if (request.getAttribute("erreur") != null) { %>
-        <p class="error"><%= request.getAttribute("erreur") %></p>
+    <% if (request.getAttribute("erreurs") != null) { %>
+        <div class="error" role="alert">
+            <strong>Corrige ces informations :</strong>
+            <ul>
+                <% for (String erreur : (java.util.List<String>) request.getAttribute("erreurs")) { %>
+                    <li><%= erreur %></li>
+                <% } %>
+            </ul>
+        </div>
     <% } %>
 
     <form method="post" action="${pageContext.request.contextPath}/infirmier/patients">
@@ -40,7 +47,7 @@
             </div>
             <div>
                 <label for="date_naissance">Date de naissance</label>
-                <input id="date_naissance" name="date_naissance" type="date" required>
+                <input id="date_naissance" name="date_naissance" type="date" max="<%= java.time.LocalDate.now() %>" required>
             </div>
             <div>
                 <label for="numero_securite_sociale">Numéro de sécurité sociale</label>
@@ -52,19 +59,19 @@
         <div class="grid">
             <div>
                 <label for="tension_arterielle">Tension artérielle</label>
-                <input id="tension_arterielle" name="tension_arterielle" type="text" maxlength="20" placeholder="120/80">
+                <input id="tension_arterielle" name="tension_arterielle" type="text" maxlength="7" pattern="[1-9][0-9]{0,2}/[1-9][0-9]{0,2}" title="Format attendu : 120/80" placeholder="120/80">
             </div>
             <div>
                 <label for="frequence_cardiaque">Fréquence cardiaque (bpm)</label>
-                <input id="frequence_cardiaque" name="frequence_cardiaque" type="number" min="0" required>
+                <input id="frequence_cardiaque" name="frequence_cardiaque" type="number" min="1" step="1" required>
             </div>
             <div>
                 <label for="temperature">Température (°C)</label>
-                <input id="temperature" name="temperature" type="number" min="0" max="99.99" step="0.01" required>
+                <input id="temperature" name="temperature" type="number" min="0.01" max="99.99" step="0.01" required>
             </div>
             <div>
                 <label for="frequence_respiratoire">Fréquence respiratoire</label>
-                <input id="frequence_respiratoire" name="frequence_respiratoire" type="number" min="0" required>
+                <input id="frequence_respiratoire" name="frequence_respiratoire" type="number" min="1" step="1" required>
             </div>
         </div>
 
