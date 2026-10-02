@@ -1,0 +1,4 @@
+src/main/java/ma/youcode/clinique/db/ModelDB.java
+src/main/java/ma/youcode/clinique/db/TestConnection.java
+.vscode/settings.json
+target
