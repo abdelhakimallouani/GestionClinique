@@ -2,7 +2,6 @@ package ma.youcode.clinique.service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -29,11 +28,10 @@ public class PatientService {
     }
 
     public List<Patient> listerPatientsDuJour() {
-        LocalDate aujourdHui = LocalDate.now();
-        return patientDAO.findAll().stream()
-                .filter(patient -> patient.getHeureArrivee() != null
-                        && patient.getHeureArrivee().toLocalDate().equals(aujourdHui))
-                .sorted(Comparator.comparing(Patient::getHeureArrivee))
-                .toList();
+        return listerPatientsParDate(LocalDate.now());
+    }
+
+    public List<Patient> listerPatientsParDate(LocalDate date) {
+        return patientDAO.findByArrivalDate(Objects.requireNonNull(date));
     }
 }

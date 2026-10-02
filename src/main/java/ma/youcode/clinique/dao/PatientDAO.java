@@ -9,4 +9,5 @@ public interface PatientDAO {
     void save(Patient patient);
     Optional<Patient> findById(Long id);
     List<Patient> findAll();
+    List<Patient> findByArrivalDate(LocalDate date);
 }
