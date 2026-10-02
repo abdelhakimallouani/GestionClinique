@@ -15,7 +15,6 @@ public class Patient {
     private double temperature;
     private int frequenceRespiratoire;
     private LocalDateTime heureArrivee;
-    private String statut = "EN_ATTENTE";
 
     public Patient() {
     }
@@ -114,11 +113,4 @@ public class Patient {
         this.heureArrivee = heureArrivee;
     }
 
-    public String getStatut() {
-        return statut;
-    }
-
-    public void setStatut(String statut) {
-        this.statut = statut;
-    }
 }

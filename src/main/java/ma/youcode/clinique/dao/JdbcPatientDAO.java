@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -64,12 +63,11 @@ public class JdbcPatientDAO implements PatientDAO {
     }
 
     @Override
-    public List<Patient> findByArrivalDate(LocalDate date) {
+    public List<Patient> findAll() {
         List<Patient> patients = new ArrayList<>();
-        String sql = "SELECT * FROM patient WHERE DATE(heure_arrivee) = ? ORDER BY heure_arrivee ASC";
+        String sql = "SELECT * FROM patient";
         try (Connection connection = DBConnection.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setDate(1, Date.valueOf(date));
             try (ResultSet result = statement.executeQuery()) {
                 while (result.next()) {
                     patients.add(mapPatient(result));
@@ -93,7 +91,6 @@ public class JdbcPatientDAO implements PatientDAO {
         patient.setTemperature(result.getDouble("temperature"));
         patient.setFrequenceRespiratoire(result.getInt("frequence_respiratoire"));
         patient.setHeureArrivee(result.getTimestamp("heure_arrivee").toLocalDateTime());
-        patient.setStatut(result.getString("statut"));
         return patient;
     }
 }

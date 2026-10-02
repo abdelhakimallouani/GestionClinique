@@ -11,12 +11,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import ma.youcode.clinique.dao.JdbcPatientDAO;
 import ma.youcode.clinique.entity.Patient;
 import ma.youcode.clinique.service.PatientService;
 
 @WebServlet("/infirmier/patients")
 public class PatientServlet extends HttpServlet {
-    private final PatientService patientService = new PatientService();
+    private final PatientService patientService = new PatientService(new JdbcPatientDAO());
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

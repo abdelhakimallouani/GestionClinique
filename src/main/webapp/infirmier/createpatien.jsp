@@ -32,6 +32,8 @@
                 <% } %>
             </ul>
         </div>
+    <% } else if (request.getAttribute("erreur") != null) { %>
+        <p class="error" role="alert"><%= request.getAttribute("erreur") %></p>
     <% } %>
 
     <form method="post" action="${pageContext.request.contextPath}/infirmier/patients">
