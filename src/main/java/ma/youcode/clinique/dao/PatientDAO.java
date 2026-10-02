@@ -8,5 +8,5 @@ import ma.youcode.clinique.entity.Patient;
 public interface PatientDAO {
     void save(Patient patient);
     Optional<Patient> findById(Long id);
-    List<Patient> findByArrivalDate(LocalDate date);
+    List<Patient> findAll();
 }
