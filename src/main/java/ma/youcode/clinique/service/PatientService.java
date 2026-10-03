@@ -7,14 +7,20 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import ma.youcode.clinique.dao.ConsultationDAO;
+import ma.youcode.clinique.dao.JdbcConsultationDAO;
+
 import ma.youcode.clinique.dao.PatientDAO;
+import ma.youcode.clinique.entity.Consultation;
 import ma.youcode.clinique.entity.Patient;
 
 public class PatientService {
     private final PatientDAO patientDAO;
+    private final ConsultationDAO consultationDAO;
 
-    public PatientService(PatientDAO patientDAO) {
+    public PatientService(PatientDAO patientDAO, ConsultationDAO consultationDAO) {
         this.patientDAO = Objects.requireNonNull(patientDAO);
+        this.consultationDAO = Objects.requireNonNull(consultationDAO);
     }
 
     public void enregistrer(Patient patient) {
@@ -22,6 +28,9 @@ public class PatientService {
             patient.setHeureArrivee(LocalDateTime.now());
         }
         patientDAO.save(patient);
+        Long patientId = patient.getId();
+        Consultation consultation = new Consultation(patientId);
+        consultationDAO.save(consultation);
     }
 
     public Optional<Patient> chercher(Long id) {
