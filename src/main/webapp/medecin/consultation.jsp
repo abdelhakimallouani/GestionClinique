@@ -1,30 +1,116 @@
-<form method="post"
-      action="${pageContext.request.contextPath}/consultations">
+<%@ page contentType="text/html;charset=UTF-8" %>
 
-    <input type="hidden"
-           name="action"
-           value="close">
+       <!DOCTYPE html>
+       <html lang="fr">
 
-    <input type="hidden"
-           name="id"
-           value="${consultation.id}">
+       <head>
+              <meta charset="UTF-8">
+              <title>Détails du patient</title>
+       </head>
 
-    <label>Motif</label>
-    <textarea name="motif"></textarea>
+       <body>
 
-    <label>Observations</label>
-    <textarea name="observations"></textarea>
+              <h1>Détails du patient</h1>
 
-    <label>Diagnostic</label>
-    <textarea name="diagnostic"></textarea>
+              <h2>Informations du patient</h2>
 
-    <label>Traitement</label>
-    <textarea name="traitement"></textarea>
+              <p>
+                     <strong>Nom :</strong>
+                     ${patient.nom}
+              </p>
 
-    <p>Coût : 150 DH</p>
+              <p>
+                     <strong>Prénom :</strong>
+                     ${patient.prenom}
+              </p>
 
-    <button type="submit">
-        Clôturer
-    </button>
+              <p>
+                     <strong>Date de naissance :</strong>
+                     ${patient.dateNaissance}
+              </p>
 
-</form>
+              <p>
+                     <strong>N° sécurité sociale :</strong>
+                     ${patient.numeroSecuriteSociale}
+              </p>
+
+
+              <h2>Signes vitaux</h2>
+
+              <p>
+                     <strong>Tension artérielle :</strong>
+                     ${patient.tensionArterielle}
+              </p>
+
+              <p>
+                     <strong>Fréquence cardiaque :</strong>
+                     ${patient.frequenceCardiaque}
+              </p>
+
+              <p>
+                     <strong>Température :</strong>
+                     ${patient.temperature}
+              </p>
+
+              <p>
+                     <strong>Fréquence respiratoire :</strong>
+                     ${patient.frequenceRespiratoire}
+              </p>
+
+
+              <h2>Consultation</h2>
+
+              <p>
+                     <strong>Statut :</strong>
+                     ${consultation.statut}
+              </p>
+
+              <p>
+                     <strong>Motif :</strong>
+                     ${consultation.motif}
+              </p>
+
+              <p>
+                     <strong>Observations :</strong>
+                     ${consultation.observations}
+              </p>
+
+              <p>
+                     <strong>Diagnostic :</strong>
+                     ${consultation.diagnostic}
+              </p>
+
+              <p>
+                     <strong>Traitement :</strong>
+                     ${consultation.traitement}
+              </p>
+
+              <p>
+                     <strong>Coût :</strong>
+                     ${consultation.cout} DH
+              </p>
+
+              <p>
+                     <strong>Date consultation :</strong>
+                     ${consultation.dateConsultation}
+              </p>
+
+
+              <br>
+
+              <a href="${pageContext.request.contextPath}/medecin/consultation/edit?id=${consultation.id}">
+                     <button type="button">
+                            Faire la consultation
+                     </button>
+              </a>
+
+
+              <br><br>
+
+              <a href="${pageContext.request.contextPath}/medecin/patients">
+                     Retour aux patients
+              </a>
+
+       </body>
+
+       </html>
