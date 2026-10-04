@@ -15,6 +15,7 @@ public class Consultation {
     private BigDecimal cout;
     private LocalDateTime dateConsultation;
     private String statut;
+    private Patient patient;
 
     public Consultation() {
     }
@@ -25,7 +26,8 @@ public class Consultation {
         this.statut = "EN_ATTENTE";
     }
 
-    public Consultation(Long id,Long patientId,String motif,String observations,String diagnostic,String traitement,BigDecimal cout,LocalDateTime dateConsultation,String statut) {
+    public Consultation(Long id, Long patientId, String motif, String observations, String diagnostic,
+            String traitement, BigDecimal cout, LocalDateTime dateConsultation, String statut) {
 
         this.id = id;
         this.patientId = patientId;
@@ -108,5 +110,13 @@ public class Consultation {
 
     public void setStatut(String statut) {
         this.statut = statut;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 }

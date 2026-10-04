@@ -1,6 +1,7 @@
 package ma.youcode.clinique.service;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import ma.youcode.clinique.dao.ConsultationDAO;
 import ma.youcode.clinique.entity.Consultation;
@@ -11,13 +12,8 @@ public class ConsultationService {
     public ConsultationService(ConsultationDAO consultationDAO) {
         this.consultationDAO = consultationDAO;
     }
-    public void enregistrer(Consultation consultation) {
-        if (consultation.getCout() == null) {
-            consultation.setCout(new BigDecimal("0.00"));
-        }
-        if (consultation.getStatut() == null) {
-            consultation.setStatut("EN_ATTENTE");
-        }
-        consultationDAO.save(consultation);
+
+    public List<Consultation> lister() {
+        return consultationDAO.findByStatut("EN_ATTENTE");
     }
 }
