@@ -18,6 +18,11 @@ public class PatientService {
     private final PatientDAO patientDAO;
     private final ConsultationDAO consultationDAO;
 
+    public PatientService(PatientDAO patientDAO) {
+        this.patientDAO = Objects.requireNonNull(patientDAO);
+        this.consultationDAO = new JdbcConsultationDAO();
+    }
+
     public PatientService(PatientDAO patientDAO, ConsultationDAO consultationDAO) {
         this.patientDAO = Objects.requireNonNull(patientDAO);
         this.consultationDAO = Objects.requireNonNull(consultationDAO);
@@ -44,5 +49,9 @@ public class PatientService {
                         && patient.getHeureArrivee().toLocalDate().equals(aujourdHui))
                 .sorted(Comparator.comparing(Patient::getHeureArrivee))
                 .toList();
+    }
+
+    public Optional<Patient> findById(Long id) {
+        return patientDAO.findById(id);
     }
 }
