@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -76,6 +77,26 @@ public class JdbcPatientDAO implements PatientDAO {
             return patients;
         } catch (SQLException e) {
             throw new IllegalStateException("Erreur pendant la liste des patients", e);
+        }
+    }
+
+    @Override
+    public List<Patient> findByArrivalDate(LocalDate date) {
+        List<Patient> patients = new ArrayList<>();
+        String sql = "SELECT * FROM patient WHERE heure_arrivee >= ? AND heure_arrivee < ? "
+                + "ORDER BY heure_arrivee ASC";
+        try (Connection connection = DBConnection.getConnection();
+                PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setTimestamp(1, Timestamp.valueOf(date.atStartOfDay()));
+            statement.setTimestamp(2, Timestamp.valueOf(date.plusDays(1).atStartOfDay()));
+            try (ResultSet result = statement.executeQuery()) {
+                while (result.next()) {
+                    patients.add(mapPatient(result));
+                }
+            }
+            return patients;
+        } catch (SQLException e) {
+            throw new IllegalStateException("Erreur pendant la recherche des patients par date", e);
         }
     }
 
