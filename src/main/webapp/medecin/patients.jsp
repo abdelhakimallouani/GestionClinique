@@ -58,14 +58,35 @@
                     color: white;
                     border-radius: 5px;
                 }
+
+                .logout {
+                    display: inline-block;
+                    padding: 10px 16px;
+                    margin-bottom: 20px;
+                    color: white;
+                    background-color: #dc2626;
+                    border-radius: 7px;
+                    text-decoration: none;
+                    font-weight: bold;
+                }
+
+                .logout:hover {
+                    background-color: #b91c1c;
+                }
+                
             </style>
         </head>
 
         <body>
 
+            <a class="logout" href="${pageContext.request.contextPath}/logout">
+                Déconnexion
+            </a>
+
             <div class="container">
 
                 <h1>Patients en attente</h1>
+
 
                 <c:choose>
 

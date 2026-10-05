@@ -17,123 +17,123 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet({
-        "/medecin/patients",
-        "/medecin/consultation",
-        "/medecin/consultation/edit"
+                "/medecin/patients",
+                "/medecin/consultation",
+                "/medecin/consultation/edit"
 })
 public class ConsultationServlet extends HttpServlet {
 
-    private ConsultationService consultationService;
-    private PatientService patientService;
+        private ConsultationService consultationService;
+        private PatientService patientService;
 
-    @Override
-    public void init() {
+        @Override
+        public void init() {
 
-        consultationService = new ConsultationService(
-                new JdbcConsultationDAO());
+                consultationService = new ConsultationService(
+                                new JdbcConsultationDAO());
 
-        patientService = new PatientService(
-                new JdbcPatientDAO());
-    }
-
-    @Override
-    protected void doGet(
-            HttpServletRequest request,
-            HttpServletResponse response) throws ServletException, IOException {
-
-        String path = request.getServletPath();
-
-        if ("/medecin/patients".equals(path)) {
-
-            List<Consultation> consultations = consultationService.lister();
-
-            request.setAttribute("consultations", consultations);
-
-            request.getRequestDispatcher(
-                    "/medecin/patients.jsp").forward(request, response);
-
-        } else if ("/medecin/consultation".equals(path)) {
-
-            Long consultationId = Long.parseLong(
-                    request.getParameter("id"));
-
-            Consultation consultation = consultationService
-                    .findById(consultationId)
-                    .orElseThrow();
-
-            Patient patient = patientService
-                    .findById(
-                            consultation.getPatientId())
-                    .orElseThrow();
-
-            request.setAttribute(
-                    "consultation",
-                    consultation);
-
-            request.setAttribute(
-                    "patient",
-                    patient);
-
-            request.getRequestDispatcher(
-                    "/medecin/consultation.jsp").forward(request, response);
-
-        } else if ("/medecin/consultation/edit".equals(path)) {
-
-            Long consultationId = Long.parseLong(
-                    request.getParameter("id"));
-
-            Consultation consultation = consultationService
-                    .findById(consultationId)
-                    .orElseThrow();
-
-            Patient patient = patientService
-                    .findById(
-                            consultation.getPatientId())
-                    .orElseThrow();
-
-            request.setAttribute(
-                    "consultation",
-                    consultation);
-
-            request.setAttribute(
-                    "patient",
-                    patient);
-
-            request.getRequestDispatcher(
-                    "/medecin/consultation-edit.jsp").forward(request, response);
+                patientService = new PatientService(
+                                new JdbcPatientDAO());
         }
-    }
 
-    @Override
-    protected void doPost(
-            HttpServletRequest request,
-            HttpServletResponse response) throws ServletException, IOException {
+        @Override
+        protected void doGet(
+                        HttpServletRequest request,
+                        HttpServletResponse response) throws ServletException, IOException {
 
-        String path = request.getServletPath();
+                String path = request.getServletPath();
 
-        if ("/medecin/consultation/edit".equals(path)) {
+                if ("/medecin/patients".equals(path)) {
 
-            Long consultationId = Long.parseLong(
-                    request.getParameter("id"));
+                        List<Consultation> consultations = consultationService.lister();
 
-            String motif = request.getParameter("motif");
+                        request.setAttribute("consultations", consultations);
 
-            String observations = request.getParameter("observations");
+                        request.getRequestDispatcher(
+                                        "/medecin/patients.jsp").forward(request, response);
 
-            String diagnostic = request.getParameter("diagnostic");
+                } else if ("/medecin/consultation".equals(path)) {
 
-            String traitement = request.getParameter("traitement");
+                        Long consultationId = Long.parseLong(
+                                        request.getParameter("id"));
 
-            consultationService.closeConsultation(
-                    consultationId,
-                    motif,
-                    observations,
-                    diagnostic,
-                    traitement);
+                        Consultation consultation = consultationService
+                                        .findById(consultationId)
+                                        .orElseThrow();
 
-            response.sendRedirect(
-                    request.getContextPath()
-                            + "/medecin/patients");
+                        Patient patient = patientService
+                                        .findById(
+                                                        consultation.getPatientId())
+                                        .orElseThrow();
+
+                        request.setAttribute(
+                                        "consultation",
+                                        consultation);
+
+                        request.setAttribute(
+                                        "patient",
+                                        patient);
+
+                        request.getRequestDispatcher(
+                                        "/medecin/consultation.jsp").forward(request, response);
+
+                } else if ("/medecin/consultation/edit".equals(path)) {
+
+                        Long consultationId = Long.parseLong(
+                                        request.getParameter("id"));
+
+                        Consultation consultation = consultationService
+                                        .findById(consultationId)
+                                        .orElseThrow();
+
+                        Patient patient = patientService
+                                        .findById(
+                                                        consultation.getPatientId())
+                                        .orElseThrow();
+
+                        request.setAttribute(
+                                        "consultation",
+                                        consultation);
+
+                        request.setAttribute(
+                                        "patient",
+                                        patient);
+
+                        request.getRequestDispatcher(
+                                        "/medecin/consultation-edit.jsp").forward(request, response);
+                }
         }
-    }
+
+        @Override
+        protected void doPost(
+                        HttpServletRequest request,
+                        HttpServletResponse response) throws ServletException, IOException {
+
+                String path = request.getServletPath();
+
+                if ("/medecin/consultation/edit".equals(path)) {
+
+                        Long consultationId = Long.parseLong(
+                                        request.getParameter("id"));
+
+                        String motif = request.getParameter("motif");
+
+                        String observations = request.getParameter("observations");
+
+                        String diagnostic = request.getParameter("diagnostic");
+
+                        String traitement = request.getParameter("traitement");
+
+                        consultationService.closeConsultation(
+                                        consultationId,
+                                        motif,
+                                        observations,
+                                        diagnostic,
+                                        traitement);
+
+                        response.sendRedirect(
+                                        request.getContextPath()
+                                                        + "/medecin/patients");
+                }
+        }
 }
