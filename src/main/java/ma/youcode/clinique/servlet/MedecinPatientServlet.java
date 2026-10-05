@@ -10,11 +10,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ma.youcode.clinique.dao.JdbcPatientDAO;
+import ma.youcode.clinique.dao.JdbcConsultationDAO;
 import ma.youcode.clinique.service.PatientService;
 
 @WebServlet("/medecin/patients")
 public class MedecinPatientServlet extends HttpServlet {
-    private final PatientService patientService = new PatientService(new JdbcPatientDAO());
+    private final PatientService patientService = new PatientService(new JdbcPatientDAO(), new JdbcConsultationDAO());
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -30,8 +31,15 @@ public class MedecinPatientServlet extends HttpServlet {
             }
         }
 
+        String tri = request.getParameter("tri");
+        if (!"nom".equals(tri) && !"naissance".equals(tri)) {
+            tri = "arrivee";
+        }
+        String ordre = "desc".equals(request.getParameter("ordre")) ? "desc" : "asc";
+        request.setAttribute("triSelectionne", tri);
+        request.setAttribute("ordreSelectionne", ordre);
         request.setAttribute("dateSelectionnee", date);
-        request.setAttribute("patients", patientService.listerPatientsParDate(date));
+        request.setAttribute("patients", patientService.listerPatientsParDate(date, tri, ordre));
         request.getRequestDispatcher("/medecin/patients.jsp").forward(request, response);
     }
 }

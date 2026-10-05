@@ -12,12 +12,19 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ma.youcode.clinique.dao.JdbcPatientDAO;
+import ma.youcode.clinique.dao.ConsultationDAO;
+import ma.youcode.clinique.dao.JdbcConsultationDAO;
+import ma.youcode.clinique.dao.PatientDAO;
+
 import ma.youcode.clinique.entity.Patient;
+import ma.youcode.clinique.service.ConsultationService;
 import ma.youcode.clinique.service.PatientService;
+import ma.youcode.clinique.service.ConsultationService;
 
 @WebServlet("/infirmier/patients")
 public class PatientServlet extends HttpServlet {
-    private final PatientService patientService = new PatientService(new JdbcPatientDAO());
+
+    private final PatientService patientService = new PatientService(new JdbcPatientDAO(), new JdbcConsultationDAO());
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

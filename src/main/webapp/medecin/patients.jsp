@@ -13,6 +13,8 @@
     LocalDate dateSelectionnee = (LocalDate) request.getAttribute("dateSelectionnee");
     if (dateSelectionnee == null) dateSelectionnee = LocalDate.now();
     String erreurDate = (String) request.getAttribute("erreurDate");
+    String triSelectionne = (String) request.getAttribute("triSelectionne");
+    String ordreSelectionne = (String) request.getAttribute("ordreSelectionne");
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 %>
@@ -29,9 +31,9 @@
         h1 { margin: 0 0 8px; color: #197c8c; }
         .subtitle { margin: 0 0 24px; color: #60747b; }
         .card { overflow: hidden; border-radius: 10px; background: white; box-shadow: 0 4px 16px rgba(30, 65, 75, .08); }
-        .filter { display: flex; align-items: end; gap: 12px; padding: 20px; border-bottom: 1px solid #e5edef; }
+        .filter { display: flex; flex-wrap: wrap; align-items: end; gap: 12px; padding: 20px; border-bottom: 1px solid #e5edef; }
         label { display: grid; gap: 7px; color: #52676e; font-weight: bold; }
-        input, button { min-height: 40px; padding: 8px 12px; border: 1px solid #cbd9dc; border-radius: 6px; font: inherit; }
+        input, select, button { min-height: 40px; padding: 8px 12px; border: 1px solid #cbd9dc; border-radius: 6px; font: inherit; }
         button { color: white; background: #197c8c; border: 0; cursor: pointer; font-weight: bold; }
         button:hover { background: #126574; }
         .summary { padding: 16px 20px; color: #52676e; }
@@ -56,7 +58,20 @@
             <label for="date">Date d'arrivée
                 <input id="date" type="date" name="date" value="<%= dateSelectionnee %>" required>
             </label>
-            <button type="submit">Filtrer</button>
+            <label for="tri">Trier par
+                <select id="tri" name="tri">
+                    <option value="arrivee" <%= "arrivee".equals(triSelectionne) ? "selected" : "" %>>Heure d'arrivée</option>
+                    <option value="nom" <%= "nom".equals(triSelectionne) ? "selected" : "" %>>Nom et prénom</option>
+                    <option value="naissance" <%= "naissance".equals(triSelectionne) ? "selected" : "" %>>Date de naissance</option>
+                </select>
+            </label>
+            <label for="ordre">Ordre
+                <select id="ordre" name="ordre">
+                    <option value="asc" <%= "asc".equals(ordreSelectionne) ? "selected" : "" %>>Croissant</option>
+                    <option value="desc" <%= "desc".equals(ordreSelectionne) ? "selected" : "" %>>Décroissant</option>
+                </select>
+            </label>
+            <button type="submit">Appliquer</button>
         </form>
         <% if (erreurDate != null) { %><p class="error"><%= escapeHtml(erreurDate) %></p><% } %>
         <div class="summary"><strong><%= patients.size() %></strong> patient(s) arrivé(s) le <%= dateSelectionnee.format(dateFormatter) %></div>
