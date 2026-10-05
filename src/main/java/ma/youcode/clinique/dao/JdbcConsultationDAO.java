@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.ArrayList;
 import ma.youcode.clinique.entity.Patient;
 import java.sql.Timestamp;
+import java.sql.Types;
 import java.util.List;
 
 import ma.youcode.clinique.db.DBConnection;
@@ -109,9 +110,14 @@ public class JdbcConsultationDAO implements ConsultationDAO {
                 Connection connection = DBConnection.getConnection();
                 PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            statement.setLong(1, consultation.getPatientId());
-            statement.setString(2, consultation.getStatut());
-            statement.setLong(3, consultation.getId());
+            statement.setString(1, consultation.getMotif());
+            statement.setString(2, consultation.getObservations());
+            statement.setString(3, consultation.getDiagnostic());
+            statement.setString(4, consultation.getTraitement());
+            statement.setBigDecimal(5, consultation.getCout());
+            statement.setTimestamp(6, Timestamp.valueOf(consultation.getDateConsultation()));
+            statement.setString(7, consultation.getStatut());
+            statement.setLong(8, consultation.getId());
             statement.executeUpdate();
 
         } catch (SQLException e) {

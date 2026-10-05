@@ -103,4 +103,37 @@ public class ConsultationServlet extends HttpServlet {
                     "/medecin/consultation-edit.jsp").forward(request, response);
         }
     }
+
+    @Override
+    protected void doPost(
+            HttpServletRequest request,
+            HttpServletResponse response) throws ServletException, IOException {
+
+        String path = request.getServletPath();
+
+        if ("/medecin/consultation/edit".equals(path)) {
+
+            Long consultationId = Long.parseLong(
+                    request.getParameter("id"));
+
+            String motif = request.getParameter("motif");
+
+            String observations = request.getParameter("observations");
+
+            String diagnostic = request.getParameter("diagnostic");
+
+            String traitement = request.getParameter("traitement");
+
+            consultationService.closeConsultation(
+                    consultationId,
+                    motif,
+                    observations,
+                    diagnostic,
+                    traitement);
+
+            response.sendRedirect(
+                    request.getContextPath()
+                            + "/medecin/patients");
+        }
+    }
 }
