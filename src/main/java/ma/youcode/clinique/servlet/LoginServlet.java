@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
 import ma.youcode.clinique.dao.JdbcUserDAO;
 import ma.youcode.clinique.dao.UserDAO;
 import ma.youcode.clinique.entity.Utilisateur;
@@ -16,6 +17,8 @@ import ma.youcode.clinique.service.UserService;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
+
+    private UserService userService;
 
     @Override
     public void init() {
@@ -26,27 +29,36 @@ public class LoginServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(
+            HttpServletRequest request,
+            HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("/login.jsp").forward(request, response);
+
+        request.getRequestDispatcher("/login.jsp")
+                .forward(request, response);
     }
 
-    private UserService userService;
-
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(
+            HttpServletRequest request,
+            HttpServletResponse response)
             throws ServletException, IOException {
 
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        Optional<Utilisateur> optionalUser = userService.login(login, password);
+        Optional<Utilisateur> optionalUser =
+                userService.login(login, password);
 
         if (optionalUser.isEmpty()) {
 
-            request.setAttribute("error", "Login ou mot de passe incorrect");
+            request.setAttribute(
+                    "error",
+                    "Login ou mot de passe incorrect"
+            );
 
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/login.jsp")
+                    .forward(request, response);
 
             return;
         }
@@ -55,16 +67,24 @@ public class LoginServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
 
+        request.changeSessionId();
+
         session.setAttribute("user", user);
         session.setAttribute("role", user.getRole());
 
         if ("INFIRMIER".equals(user.getRole())) {
 
-            response.sendRedirect(request.getContextPath() + "/infirmier/patients");
+            response.sendRedirect(
+                    request.getContextPath()
+                            + "/infirmier/patients"
+            );
 
         } else if ("GENERALISTE".equals(user.getRole())) {
 
-            response.sendRedirect(request.getContextPath() + "/medecin/patients");
+            response.sendRedirect(
+                    request.getContextPath()
+                            + "/medecin/patients"
+            );
         }
     }
 }

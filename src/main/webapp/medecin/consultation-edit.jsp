@@ -284,6 +284,7 @@
     <form
             method="post"
             action="${pageContext.request.contextPath}/medecin/consultation/edit">
+            <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
 
         <input
                 type="hidden"
