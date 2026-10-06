@@ -73,15 +73,18 @@
                 .logout:hover {
                     background-color: #b91c1c;
                 }
-                
             </style>
         </head>
 
         <body>
 
-            <a class="logout" href="${pageContext.request.contextPath}/logout">
+            <!-- <a class="logout" href="${pageContext.request.contextPath}/logout">
                 Déconnexion
-            </a>
+            </a> -->
+            <form action="${pageContext.request.contextPath}/logout" method="post">
+                <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
+                <button type="submit" class="logout">Déconnexion</button>
+            </form>
 
             <div class="container">
 

@@ -13,9 +13,9 @@ import java.io.IOException;
 public class LogoutServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request,
-                          HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(
+            HttpServletRequest request,
+            HttpServletResponse response) throws IOException {
 
         HttpSession session = request.getSession(false);
 
@@ -24,7 +24,6 @@ public class LogoutServlet extends HttpServlet {
         }
 
         response.sendRedirect(
-            request.getContextPath() + "/login.jsp"
-        );
+                request.getContextPath() + "/login");
     }
 }

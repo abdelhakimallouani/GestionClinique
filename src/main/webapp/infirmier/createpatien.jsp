@@ -37,6 +37,7 @@
     <% } %>
 
     <form method="post" action="${pageContext.request.contextPath}/infirmier/patients">
+        <input type="hidden" name="csrfToken" value="${sessionScope.csrfToken}">
         <h2>Identité</h2>
         <div class="grid">
             <div>

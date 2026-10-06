@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -69,36 +70,26 @@
 </head>
 
 <body>
-<div class="login-card">
-    <h1>Clinique</h1>
+    <div class="login-card">
+        <h1>Clinique</h1>
 
-    <% if (request.getAttribute("error") != null) { %>
-        <div class="error">
-            <%= request.getAttribute("error") %>
-        </div>
-    <% } %>
+        <% if (request.getAttribute("error") !=null) { %>
+            <div class="error">
+                <%= request.getAttribute("error") %>
+            </div>
+            <% } %>
 
-    <form method="post" action="${pageContext.request.contextPath}/login">
-        <label for="login">Adresse e-mail</label>
-        <input
-            id="login"
-            name="login"
-            type="text"
-            placeholder="nom@exemple.com"
-            required
-        >
+                <form method="post" action="${pageContext.request.contextPath}/login">
+                    <input type="hidden" name="csrfToken" value="${csrfToken}">
+                    <label for="login">Nom d'utilisateur</label>
+                    <input id="login" name="login" type="text" placeholder="nom@exemple.com" required>
 
-        <label for="password">Mot de passe</label>
-        <input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Votre mot de passe"
-            required
-        >
+                    <label for="password">Mot de passe</label>
+                    <input id="password" name="password" type="password" placeholder="Votre mot de passe" required>
 
-        <button type="submit">Se connecter</button>
-    </form>
-</div>
+                    <button type="submit">Se connecter</button>
+                </form>
+    </div>
 </body>
+
 </html>
